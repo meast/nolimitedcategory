@@ -155,7 +155,7 @@
                     }
                     if(node < options.MaxNode){
                         // 非倒列的情况下，重置下一级选项
-                        if(selectedval <= options.DefaultOptionValue)
+                        if(selectedval == options.DefaultOptionValue)
                         jQuery("#" + options.Prefix + (node+1)).html("<option value=\""+options.DefaultOptionValue+"\">"+options.DefaultOptionText+"</option>");
                     }
                 }
