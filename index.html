@@ -27,7 +27,20 @@
 			<div id="nolimitid2"></div>
 			<div id="ShowTargetId2"></div>
 			<div><input type="text" id="categoryid2" name="categoryid2" /></div>
-		</div><div><br /><br /></div>
+		</div>
+		<div>
+			<h2>Sample 4</h2>
+			<div id="nolimitid3"></div>
+			<div id="ShowTargetId3"></div>
+			<div><input type="text" id="categoryid3" name="categoryid3" /></div>
+		</div>
+		<div>
+			<h2>Sample 5</h2>
+			<div id="nolimitid4"></div>
+			<div id="ShowTargetId4"></div>
+			<div><input type="text" id="categoryid4" name="categoryid4" /></div>
+		</div>
+		<div><br /><br /></div>
 		<div>
 			The category table likes this:<br />
 				ItemId(int),ItemName(string),ItemNodePath(string),ItemParentId(int),IsLastNode(bool)<br />
@@ -65,11 +78,25 @@
 			_opt["DefaultOptionText"] = "Select Please";
 			jQuery("#nolimitid1").nolimitedcategory(_opt);
 			
-			//_opt["Prefix"] = "m-";
+			// sample 3
 			_opt["MaxNode"] = 2;
 			_opt["ShowTargetId"] = "ShowTargetId2";
 			_opt["LastValueId"] = "categoryid2";
 			jQuery("#nolimitid2").nolimitedcategory(_opt);
+			
+			// sample 4
+			_opt["MaxNode"] = 0;
+			_opt["ShowTargetId"] = "ShowTargetId3";
+			_opt["LastValueId"] = "categoryid3";
+			_opt["AdditionAttributes"] = "size='8' class='inode-{0}'";
+			jQuery("#nolimitid3").nolimitedcategory(_opt);
+			
+			// sample 5
+			_opt["MaxNode"] = 0;
+			_opt["ShowTargetId"] = "ShowTargetId4";
+			_opt["LastValueId"] = "categoryid4";
+			_opt["AdditionAttributes"] = ["size='3'","size='5'"];
+			jQuery("#nolimitid4").nolimitedcategory(_opt);
 		</script>
 	</body>
 </html>

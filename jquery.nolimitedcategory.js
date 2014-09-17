@@ -28,6 +28,7 @@
                 LastValueId : "", // 选择了最后一级之后，把这个值设到这个ID的容器上，使用val方法。
                 ShowTargetId : "",// 选择了之后把文字显示在这个ID的容器上
                 ShowSeparator : " > ",// 选择了之后文字显示两级之间的分隔符
+                AdditionAttributes : "",// 给每个下拉框添加的属性KV，适配显示多项
                 Prefix : "s-",//前缀，一个页面使用多个无限级菜单时使用.(有点多余的感觉.)
                 callback : null
             } , options);
@@ -66,8 +67,25 @@
                     options.MaxNode = calcmaxnode();
                 }
                 _html = "<div id=\""+options.Prefix+"wrapper\">";
+                var _aa = "";
+                var _isAa = false;
+                if(typeof(options.AdditionAttributes) == "string"){
+                    _aa = options.AdditionAttributes;
+                }else{
+                    if(typeof(options.AdditionAttributes) == "object" && options.AdditionAttributes.length > 0){
+                        _isAa = true;
+                    }
+                }
                 for(i = 0; i < options.MaxNode; i++){
-                    _html += " <select id=\""+options.Prefix+(i+1)+"\" data-node=\""+(i + 1)+"\"><option value=\""+options.DefaultOptionValue+"\">"+options.DefaultOptionText+"</option></select> ";
+                    var _aai = "";
+                    if(_isAa){
+                        if(options.AdditionAttributes.length > i){
+                            _aai = options.AdditionAttributes[i];
+                        }else{
+                            _aai = options.AdditionAttributes[(options.AdditionAttributes.length - 1)];
+                        }
+                    }
+                    _html += " <select id=\""+options.Prefix+(i+1)+"\" data-node=\""+(i + 1)+"\" "+_aa.replace("{0}", (i+1))+" "+_aai+"><option value=\""+options.DefaultOptionValue+"\">"+options.DefaultOptionText+"</option></select> ";
                 }
                 _html += "</div>";
                 _this.append(_html);
@@ -107,10 +125,11 @@
                         var _islastnode = jQuery("#" + options.Prefix + (i + 1) + " option:selected").data("islastnode");
                         if(_val != options.DefaultOptionValue){
                             _txt += _ntxt;
-                            if(_islastnode.toString().toLowerCase() == "true" || i == (options.MaxNode - 1)){
+                            if(_islastnode || i == (options.MaxNode - 1)){
                                 // 最后一级被选择了，是否设置值
                                 if(options.LastValueId && typeof(jQuery("#" + options.LastValueId)) == "object"){
                                     jQuery("#" + options.LastValueId).val(_val);
+                                    break; // 找到最后一级，终止循环，防止后边还有空值时无法给id容器赋值.
                                 }
                             }else{
                                 _txt += options.ShowSeparator;
